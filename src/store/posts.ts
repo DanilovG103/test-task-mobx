@@ -1,21 +1,20 @@
 import { makeAutoObservable } from "mobx"
-import { usersBaseUrl } from "../api/config"
-import { User } from "../api/types"
+import { userPostsUrl } from "../api/config"
 
-class Users {
-  users: User[] = []
+class Posts {
+  postsCount: number = 0
   loading: boolean = false
   error: string = ''
   constructor() {
     makeAutoObservable(this)
   }
 
-  fetchUsers(page: number) {
+  fetchUserPosts(id: number) {
     this.loading = true
-    fetch(`${usersBaseUrl}?page=${page}&limit=10`)
+    fetch(`${userPostsUrl}?user_id=${id}`)
       .then(response => response.json())
       .then(data => {
-        this.users = [...this.users, ...data.data]
+        this.postsCount = data.meta.pagination.total
         this.loading = false
       })
       .catch(e => {
@@ -24,4 +23,4 @@ class Users {
   }
 }
 
-export default new Users()
+export default new Posts()

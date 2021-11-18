@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import users from '../store/users'
+import { Table} from 'react-bootstrap'
+import { TableRow } from './TableRow'
 
-export const UserList = observer(() => {
+interface Props {
+  page: number
+}
+
+export const UserList = observer(({ page }: Props) => {
 
   useEffect(() => {
-    users.fetchUsers(1)
-  },[])
+    users.fetchUsers(page)
+  },[page])
 
   return (
-    <table>
+    <Table>
       <thead>
         <tr>
           <th>Name</th>
@@ -19,14 +25,12 @@ export const UserList = observer(() => {
         </tr>
       </thead>
       <colgroup span={4}></colgroup>
+      <tbody>
       {users.users.map(user => (
-        <tr key={user.id}>
-          <td>{user.name}</td>
-          <td>{user.email}</td>
-          <td>{user.gender}</td>
-          <td>{user.status}</td>
-        </tr>
+        <TableRow user={user} key={user.id}/>
       ))}
-    </table>
-  )
+      </tbody>
+      {users.loading && <h1>Loading...</h1>}
+    </Table>  
+    )
 })
