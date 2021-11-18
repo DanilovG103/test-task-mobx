@@ -14,6 +14,10 @@ export const UserList = observer(({ page }: Props) => {
     users.fetchUsers(page)
   },[page])
 
+  if (!!users.error) {
+    return <h1>{users.error}</h1>
+  }
+
   return (
     <Table>
       <thead>

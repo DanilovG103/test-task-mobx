@@ -15,7 +15,11 @@ export const TableRow = observer(({user}: Props) => {
       <OverlayTrigger placement='right' overlay={
         <Tooltip>
           {posts.loading ? (
-            <p>Loading info...</p>
+            !!posts.error ? (
+              <p>{posts.error}</p>
+            ): (
+              <p>Loading info...</p>
+            )
           ) : (
             <p>
               Total posts: {posts.postsCount}

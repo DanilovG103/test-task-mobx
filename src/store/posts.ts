@@ -18,6 +18,7 @@ class Posts {
         this.loading = false
       })
       .catch(e => {
+        this.loading = false
         this.error = e.message
       })
   }
