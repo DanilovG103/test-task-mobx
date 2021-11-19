@@ -18,6 +18,7 @@ export const Popup = observer(({children}: Props) => {
             Total posts: {posts.postsCount}
           </p> 
         )}
+        {!!posts.error && "Error: " + posts.error} 
       </Tooltip>
     }>
       {children}
